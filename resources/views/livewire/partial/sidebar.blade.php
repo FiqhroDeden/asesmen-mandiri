@@ -1,5 +1,28 @@
 <ul class="menu p-4 w-80 min-h-full bg-base-100 text-base-content border-r-2 border-base-300 space-y-4 ">
-
+    @if (Auth::user()->role == 'admin')
+    <li>
+        <h2 class="menu-title">Dashboard</h2>
+        <ul>
+            <li>
+                <a href="{{ route('dashboard') }}" @class(['active' => Route::is('dashboard')]) wire:navigate>
+                    <x-tabler-dashboard class="size-5" />
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h2 class="menu-title">Asesmen Prestasi</h2>
+        <ul>
+            <li>
+                <a href="{{ route('peserta-prestasi') }}" @class(['active' => Route::is(['peserta-prestasi', 'peserta-prestasi.detail', 'peserta-prestasi.asesmen'])]) wire:navigate>
+                    <x-tabler-users class="size-5" />
+                    <span>Peserta Prestasi</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    @endif
     @if (Auth::user()->role == 'peserta')
         <li>
             <h2 class="menu-title">Dashboard</h2>

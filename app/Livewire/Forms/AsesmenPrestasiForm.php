@@ -13,6 +13,8 @@ class AsesmenPrestasiForm extends Form
     #[Validate('mimes:pdf|max:5024')]
     public $file;
 
+
+
     #[Validate('required|string')]
     public $no_peserta;
 
@@ -65,7 +67,7 @@ class AsesmenPrestasiForm extends Form
             'kode_prodi' => 'required|string',
             'kurikulum' => 'required|string',
             'jurusan' => 'nullable|string',
-            'file' => 'required|mimes:pdf|max:5024',
+            'file' => 'mimes:pdf|max:5024',
             'semester_1_bahasa_indonesia' => 'nullable|numeric|min:0|max:100',
             'semester_1_bahasa_inggris' => 'nullable|numeric|min:0|max:100',
             'semester_1_matematika' => 'nullable|numeric|min:0|max:100',
@@ -95,13 +97,14 @@ class AsesmenPrestasiForm extends Form
         ];
     }
 
+
+
     public function save()
     {
-
-
         DB::beginTransaction();
 
         try {
+
             $asesmenPrestasi = AsesmenPrestasi::updateOrCreate(
                 ['no_peserta' => $this->no_peserta],
                 [
@@ -137,9 +140,58 @@ class AsesmenPrestasiForm extends Form
                     'file_path' => $this->file->store(path: 'public/rapor')
                 ]
             );
+            DB::commit();
+            flash()->success('Data Asesmen Prestasi Berhasil Disimpan.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.'. $e);
+        }
+    }
+    public function update()
+    {
+
+
+        DB::beginTransaction();
+
+        try {
+
+            $asesmenPrestasi = AsesmenPrestasi::updateOrCreate(
+                ['no_peserta' => $this->no_peserta],
+                [
+                    'kode_prodi' => $this->kode_prodi,
+                    'kurikulum' => $this->kurikulum,
+                    'jurusan' => $this->jurusan,
+                    'semester_1_bahasa_indonesia' => $this->semester_1_bahasa_indonesia,
+                    'semester_1_bahasa_inggris' => $this->semester_1_bahasa_inggris,
+                    'semester_1_matematika' => $this->semester_1_matematika,
+                    'semester_1_ipa' => $this->semester_1_ipa,
+                    'semester_1_ips' => $this->semester_1_ips,
+                    'semester_2_bahasa_indonesia' => $this->semester_2_bahasa_indonesia,
+                    'semester_2_bahasa_inggris' => $this->semester_2_bahasa_inggris,
+                    'semester_2_matematika' => $this->semester_2_matematika,
+                    'semester_2_ipa' => $this->semester_2_ipa,
+                    'semester_2_ips' => $this->semester_2_ips,
+                    'semester_3_bahasa_indonesia' => $this->semester_3_bahasa_indonesia,
+                    'semester_3_bahasa_inggris' => $this->semester_3_bahasa_inggris,
+                    'semester_3_matematika' => $this->semester_3_matematika,
+                    'semester_3_mapel_pendukung' => $this->semester_3_mapel_pendukung,
+                    'semester_4_bahasa_indonesia' => $this->semester_4_bahasa_indonesia,
+                    'semester_4_bahasa_inggris' => $this->semester_4_bahasa_inggris,
+                    'semester_4_matematika' => $this->semester_4_matematika,
+                    'semester_4_mapel_pendukung' => $this->semester_4_mapel_pendukung,
+                    'semester_5_bahasa_indonesia' => $this->semester_5_bahasa_indonesia,
+                    'semester_5_bahasa_inggris' => $this->semester_5_bahasa_inggris,
+                    'semester_5_matematika' => $this->semester_5_matematika,
+                    'semester_5_mapel_pendukung' => $this->semester_5_mapel_pendukung,
+                    'semester_6_bahasa_indonesia' => $this->semester_6_bahasa_indonesia,
+                    'semester_6_bahasa_inggris' => $this->semester_6_bahasa_inggris,
+                    'semester_6_matematika' => $this->semester_6_matematika,
+                    'semester_6_mapel_pendukung' => $this->semester_6_mapel_pendukung,
+                ]
+            );
 
             DB::commit();
-            flash()->success('Data Asesmen Prestasi Anda Berhasil Disimpan.');
+            flash()->success('Data Asesmen Prestasi ini Berhasil Disimpan.');
         } catch (\Exception $e) {
             DB::rollback();
             flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.'. $e);

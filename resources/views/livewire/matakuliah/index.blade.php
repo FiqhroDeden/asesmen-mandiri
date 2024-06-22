@@ -12,41 +12,42 @@
                 <table class="table">
                 <!-- head -->
                 <thead>
-                    <tr >
-                    <th class="w-2">No</th>
-                    <th>Kode</th>
-                    <th>Nama</th>
-                    <th>Kurikulum</th>
-                    <th>Semester</th>
-                    <th>SKS</th>
-                    <th>Keterangan</th>
-                    <th>RPL</th>
-                    <th width="150px">Action</th>
+                    <tr>
+                        <th class="w-2">No</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Kurikulum</th>
+                        <th>Semester</th>
+                        <th>SKS</th>
+                        <th>Keterangan</th>
+                        <th>RPL</th>
+                        <th width="150px">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- row 1 -->
                     @if ($dataMatakuliah->isEmpty())
                         <tr>
-                            <td colspan="7" class="text-center">Data not found</td>
+                            <td colspan="9" class="text-center">Data not found</td>
                         </tr>
                     @else
+                        @php
+                            $no = ($dataMatakuliah->currentPage() - 1) * $dataMatakuliah->perPage() + 1;
+                        @endphp
                         @foreach ($dataMatakuliah as $matakuliah)
                             <tr class="hover:bg-slate-100">
                                 <th>{{ $no++ }}</th>
                                 <td>{{ $matakuliah->kode }}</td>
                                 <td>{{ $matakuliah->nama }}</td>
-                                <td>{{ $matakuliah->kurikulum }}</td>
+                                <td>{{ $matakuliah->tahun_berlaku }}</td>
                                 <td>{{ $matakuliah->semester }}</td>
                                 <td>{{ $matakuliah->sks }}</td>
                                 <td>
                                     {{ $matakuliah->is_wajib ? 'Wajib' : 'Tidak Wajib' }}
                                 </td>
                                 <td>
-                                    <input type="checkbox"  wire:model.live="form.{{ $matakuliah->id }}.is_rpl" class="checkbox" />
+                                    <input type="checkbox" wire:model.live="form.{{ $matakuliah->id }}.is_rpl" class="checkbox" />
                                 </td>
                                 <td>
-
                                     <div class="tooltip" data-tip="cpmk">
                                         <button wire:click="dispatch('cpmModal', {matakuliah:{{ $matakuliah->id }}})" class="btn btn-xs btn-square"><x-tabler-star class="text-yellow-500 size-4"/></button>
                                     </div>
@@ -57,12 +58,14 @@
                             </tr>
                         @endforeach
                     @endif
-
                 </tbody>
                 </table>
+                <div class="mt-5">
+                    {{ $dataMatakuliah->links(data: ['scrollTo' => false]) }}
+                </div>
             </div>
         </div>
-      </div>
-      @livewire('matakuliah.actions')
-      @livewire('matakuliah.cpm')
+    </div>
+    @livewire('matakuliah.actions')
+    @livewire('matakuliah.cpm')
 </div>

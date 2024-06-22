@@ -25,13 +25,13 @@
     <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-align:center;">RISET DAN TEKNOLOGI</p>
     <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-align:center; font-size:14pt;"><strong><span
                 style="letter-spacing:2pt;">UNIVERSITAS PATTIMURA</span></strong></p>
-    <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
+    <p style="margin-top:0pt; margin-left:50pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
             style="letter-spacing:0.5pt;">Jalan. Ir. M. Putuhena Kampus Unpatti Poka-Ambon Kode Pos 97233</span></p>
-    <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
+    <p style="margin-top:0pt; margin-left:50pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
             style="letter-spacing:0.5pt;">Telepon, Faximile: (0911) 322626, (0911) 322627, (0911) 322628</span></p>
     <p
         style="margin-top:0pt;  margin-bottom:0pt; text-indent:85.05pt; border-bottom:4.5pt solid #000000; font-size:10pt;">
-        <span style="letter-spacing:0.5pt; margin-left:36pt;">Laman:</span><em><span style="letter-spacing:0.5pt; ">&nbsp;</span></em><a
+        <span style="letter-spacing:0.5pt; margin-left:50pt;">Laman:</span><em><span style="letter-spacing:0.5pt; ">&nbsp;</span></em><a
             href="http://www.unpatti.ac.id" style="text-decoration:none;"><em><span
                     style="letter-spacing:0.5pt; color:#000000;">www.unpatti.ac.id</span></em></a></p>
     <p style="margin-top:0pt; margin-left:99.35pt; margin-bottom:3pt; text-indent:8.65pt;">&nbsp;</p>
@@ -43,31 +43,38 @@
         Studi&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..Fakultas
         &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;. Universitas Pattimura,&nbsp;
         telah dilakukan Asesmen terhadap peserta Rekognisi Pembelajaran Lampau ( RPL ), sebagai berikut:</p>
-    <p style="margin-top:0pt; margin-bottom:0pt; text-align:justify;">&nbsp;</p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">No Peserta<span
-            style="width:20.23pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span>:{{ $peserta->no_peserta }}
-    </p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">N a m a<span
-            style="width:34.9pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span>:{{ $peserta->nama }}
-    </p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">Fakultas<span
-            style="width:31.89pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span>:
-    </p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">Program Studi<span
-            style="width:2.88pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span>:
-        {{ $peserta->prodi->nama_prodi }}</p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">Tempat/Tgl. Lahir<span
-            style="width:19.92pt; display:inline-block;">&nbsp;</span>:
-       {{$peserta->tempat_lahir}} / {{ \Carbon\Carbon::parse($peserta->tanggal_lahir)->format('j-m-Y') }}</p>
-    <p style="margin-top:0pt; margin-left:35.45pt; margin-bottom:0pt; text-align:justify;">N I K<span
-            style="width:9.22pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span><span
-            style="width:36pt; display:inline-block;">&nbsp;</span>:
-        {{ $peserta->nik }}</p>
+    <table style="margin-left:60pt;">
+        <tr>
+            <td width="150px">No Peserta</td>
+            <td width="20px">:</td>
+            <td>{{ $peserta->no_peserta }}</td>
+        </tr>
+        <tr>
+            <td>N a m a</td>
+            <td>:</td>
+            <td>{{ $peserta->nama }}</td>
+        </tr>
+        <tr>
+            <td>Fakultas</td>
+            <td>:</td>
+            <td>{{ $fakultas->nama_prodi }}</td>
+        </tr>
+        <tr>
+            <td>Program Studi</td>
+            <td>:</td>
+            <td>{{ $peserta->prodi->nama_prodi }}</td>
+        </tr>
+        <tr>
+            <td>Tempat/Tgl. Lahir</td>
+            <td>:</td>
+            <td>{{$peserta->tempat_lahir}} / {{ \Carbon\Carbon::parse($peserta->tanggal_lahir)->format('j-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td>NIK</td>
+            <td>:</td>
+            <td>{{$peserta->nik}} </td>
+        </tr>
+    </table>
     <p style="margin-top:0pt; margin-bottom:0pt;">&nbsp;</p>
     <p style="margin-top:0pt; margin-bottom:0pt;"><span style="width:36pt; display:inline-block;">&nbsp;</span><span
             style="width:36pt; display:inline-block;">&nbsp;</span><span

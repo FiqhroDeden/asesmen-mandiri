@@ -7,6 +7,7 @@ use App\Models\Matakuliah;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
@@ -45,7 +46,7 @@ class Index extends Component
             $query->where('kode', 'like', '%'. $this->search .'%')
             ->orWhere('nama','like', '%'. $this->search .'%')
             ->orWhere('kurikulum','like', '%'. $this->search .'%');
-        })->where('kode_prodi', Auth::user()->prodi)->orderBy('semester', 'asc')->get();
+        })->where('kode_prodi', Auth::user()->prodi)->orderBy('semester', 'asc')->paginate(10);
         return view('livewire.matakuliah.index', compact('dataMatakuliah'));
     }
 }

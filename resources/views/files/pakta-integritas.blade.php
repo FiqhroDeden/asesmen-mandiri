@@ -30,7 +30,7 @@
         .table td {
             padding: 5pt;
             vertical-align: top;
-            font-size: 12pt;
+            font-size: 11pt;
         }
         .table .label {
             width: 163pt;
@@ -92,13 +92,13 @@
 <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-align:center;">RISET DAN TEKNOLOGI</p>
 <p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-align:center; font-size:14pt;"><strong><span
             style="letter-spacing:2pt;">UNIVERSITAS PATTIMURA</span></strong></p>
-<p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
+<p style="margin-top:0pt; margin-left:50pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
         style="letter-spacing:0.5pt;">Jalan. Ir. M. Putuhena Kampus Unpatti Poka-Ambon Kode Pos 97233</span></p>
-<p style="margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
+<p style="margin-top:0pt; margin-left:50pt; margin-bottom:0pt; text-indent:85.05pt; font-size:10pt;"><span
         style="letter-spacing:0.5pt;">Telepon, Faximile: (0911) 322626, (0911) 322627, (0911) 322628</span></p>
 <p
     style="margin-top:0pt;  margin-bottom:0pt; text-indent:85.05pt; border-bottom:4.5pt solid #000000; font-size:10pt;">
-    <span style="letter-spacing:0.5pt; margin-left:36pt;">Laman:</span><em><span style="letter-spacing:0.5pt; ">&nbsp;</span></em><a
+    <span style="letter-spacing:0.5pt; margin-left:50pt;">Laman:</span><em><span style="letter-spacing:0.5pt; ">&nbsp;</span></em><a
         href="http://www.unpatti.ac.id" style="text-decoration:none;"><em><span
                 style="letter-spacing:0.5pt; color:#000000;">www.unpatti.ac.id</span></em></a></p>
 <p style="margin-top:0pt; margin-left:99.35pt; margin-bottom:3pt; text-indent:8.65pt;">&nbsp;</p>
@@ -106,8 +106,8 @@
     <p class="center no-margin"><strong>ASESOR RPL UNIVERSITAS PATTIMURA</strong></p>
     <div style="margin-left: 25px">
         <p class="spacer">Saya yang bertanda tangan:</p>
-        <table class="table">
-            <tbody>
+        <table class="table" >
+            <tbody ">
                 <tr>
                     <td class="label"><strong>Nama Lengkap</strong></td>
                     <td class="colon">:</td>
@@ -124,7 +124,7 @@
                     <td class="value">{{ $paktaIntegritas->jabatan_fungsional }}</td>
                 </tr>
                 <tr>
-                    <td class="label"><strong>NIP/NIK/Identitas lain</strong></td>
+                    <td class="label"><strong>NIK</strong></td>
                     <td class="colon">:</td>
                     <td class="value">{{ $paktaIntegritas->nik }}</td>
                 </tr>
@@ -183,30 +183,10 @@
                     <td class="colon">:</td>
                     <td class="value">{{ $paktaIntegritas->jabatan }}</td>
                 </tr>
-                <tr>
-                    <td class="label">
-                        <strong>Keanggotaan pada Asosiasi Profesi</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">
-                        <p class="no-margin">Keanggotaan Asosiasi</p>
-                    </td>
-                    <td class="colon">
-                        <p class="no-margin"></p>
-                        <p class="no-margin"></p>
-                        <p class="no-margin">:</p>
-                    </td>
-                    <td class="value">{{ $paktaIntegritas->keanggotan_asosiasi }}</td>
-                </tr>
             </tbody>
         </table>
 
-        <p class="spacer"></p>
-        <p class="spacer"></p>
-        <p class="spacer"></p>
-        <p class="spacer"></p>
-        <p class="spacer"></p>
+
         <p class="spacer">Menyatakan bahwa saya akan melaksanakan ketentuan sebagai berikut:</p>
         <ol>
             <li class="ol-indent">Sanggup dan bersedia menjalankan tugas sebagai Asesor Program RPL secara jujur, bertanggung jawab dan menyelesaikan semua tugas-tugas serta mengacu pada ketentuan yang berlaku.</li>
@@ -214,8 +194,7 @@
             <li class="ol-indent">Tidak melakukan pelanggaran pidana selama melakukan tugas tanggung jawab sebagai Asesor, dalam menilai calon mahasiswa RPL.</li>
             <li class="ol-indent">Bersedia menerima Sanksi sesuai Ketentuan yang berlaku.</li>
         </ol>
-        <p class="spacer"></p>
-        <p class="spacer"></p>
+
         <p class="spacer"></p>
         <p class="spacer"></p>
         <p class="spacer"></p>

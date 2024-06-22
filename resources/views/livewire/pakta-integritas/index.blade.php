@@ -126,17 +126,6 @@
                         <input type="text" @class(['input input-bordered input-sm', 'input-error' => $errors->first('form.jabatan')]) wire:model="form.jabatan" @required(true)/>
                     </label>
                 </div>
-                <h5>Keanggotaan pada Asosiasi Profesi</h5>
-                <hr>
-                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                    <label class="form-control w-full ">
-                        <div class="label">
-                        <span class="label-text">Keanggotaan Asosiasi</span>
-                        </div>
-                        <input type="text" @class(['input input-bordered input-sm', 'input-error' => $errors->first('form.keanggotan_asosiasi')]) wire:model="form.keanggotan_asosiasi"/>
-                    </label>
-                </div>
             </div>
         </form>
         @if($paktaIntegritas )

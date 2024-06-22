@@ -98,7 +98,7 @@ class Asesmen extends Component
                     }
                 }
             }
-            $sks_harus_ditempuh  = Matakuliah::where('kode_prodi', $peserta->prodi_pilihan)->sum('sks');
+            $sks_harus_ditempuh  = Matakuliah::where('kode_prodi', $peserta->prodi_pilihan)->where('is_wajib', '1')->sum('sks');
 
             $total_sks_harus_ditempuh  = $sks_harus_ditempuh - $total_sks_diakui;
 

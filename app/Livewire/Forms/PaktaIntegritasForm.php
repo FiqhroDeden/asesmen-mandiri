@@ -24,7 +24,7 @@ class PaktaIntegritasForm extends Form
     public $pendidikan_terakhir;
     public $nama_instansi;
     public $jabatan;
-    public $keanggotan_asosiasi;
+
 
     #[Validate('required|mimes:pdf|max:2048')]
     public $file;
@@ -61,7 +61,6 @@ class PaktaIntegritasForm extends Form
             'pendidikan_terakhir' => $this->pendidikan_terakhir,
             'nama_instansi'       => $this->nama_instansi,
             'jabatan'             => $this->jabatan,
-            'keanggotan_asosiasi' => $this->keanggotan_asosiasi,
         ];
 
         PaktaIntegritasRpl::updateOrCreate(

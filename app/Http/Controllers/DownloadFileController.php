@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FormulirAplikasiRpl;
+use App\Models\Prodi;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
 use App\Models\RiwayatHidupForm;
 use App\Models\PaktaIntegritasRpl;
+use App\Models\FormulirAplikasiRpl;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -16,9 +17,10 @@ class DownloadFileController extends Controller
     public function downloadPaktaIntegritas()
     {
         $logo = $this->logo;
+
         return view('files.pakta-integritas', [
             'paktaIntegritas'   => PaktaIntegritasRpl::where('user_id', auth()->user()->id)->first(),
-            'logo' => $logo
+            'logo' => $logo,
         ]);
     }
 
@@ -48,7 +50,8 @@ class DownloadFileController extends Controller
     {
         $logo = $this->logo;
         $peserta = Peserta::where('no_peserta', $no_peserta)->first();
-        return view('files.berita-acara', compact('peserta', 'logo'));
+        $fakultas = Prodi::where('id', $peserta->prodi->parent)->first();
+        return view('files.berita-acara', compact('peserta', 'logo', 'fakultas'));
 
     }
 

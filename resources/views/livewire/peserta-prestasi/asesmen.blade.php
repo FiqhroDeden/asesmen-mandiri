@@ -1,52 +1,104 @@
-<div class="main-wrapper" x-data="{ kurikulum : '' }">
+<div class="main-wrapper" x-data="{ kurikulum : @entangle('kurikulum') }">
     <div class="card w-auto bg-base-100 shadow-xl">
-        @if(Auth::user()->peserta->asesmenPrestasi)
-        <div>
-            <div role="alert" class="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span>Data Nilai anda sedang di verifikasi....</span>
-              </div>
-        </div>
-        @else
-        <form wire:submit="submit">
+
+        <form wire:submit.prevent="submit">
             <div class="card-body">
                 <div class="card-title flex items-center justify-between">
-                    <h2 class="mr-4">Asesmen Mandiri</h2>
-                    <button type="submit" class="btn btn-primary">
-                        <x-tabler-device-floppy class="size-4"/>
-                        <span class="text-bold">Submit</span>
-                        <div wire:loading>
-                            <span class="loading loading-spinner loading-xs"></span>
+                    <h2 class="mr-4">Asesmen Prestasi</h2>
+                    @if(!$is_permanen)
+                        <div class="flex items-center">
+                            <button type="button" class="btn btn-warning mr-2"
+                            wire:click="permanen"
+                            wire:confirm="Apa anda yakin ingin mengakhiri Proses Asesmen Prestasi Peserta ini?"
+                            >
+                            <x-tabler-lock class="size-5" />
+                            <span>Permanen</span>
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                <x-tabler-device-floppy class="size-4"/>
+                                <span class="text-bold">Simpan</span>
+                                <div wire:loading wire:target="submit">
+                                    <span class="loading loading-spinner loading-xs"></span>
+                                </div>
+                            </button>
                         </div>
-                    </button>
+                    @endif
                 </div>
-                <h5>Kurikulum</h5>
+                <div class="mt-6 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Foto</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                          @if ($peserta->foto)
+                          <img src="https://mandiri.pmb.unpatti.ac.id/storage/{{ $peserta->foto }}" width="200px" alt="Foto Peserta">
+                          @else
+                              <p>Tidak ada Foto</p>
+                          @endif
+                        </dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Nomor Peserta</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->no_peserta }}</dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Prodi Pilihan</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->prodi['nama_prodi'] }}</dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">NIK</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->nik }}</dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Nama</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->nama }}</dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">File Peserta Prestasi</dt>
+                        <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                              <div class="flex w-0 flex-1 items-center">
+                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                  <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
+                                </svg>
+                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                  <span class="truncate font-medium">Rapor</span>
+                                </div>
+                              </div>
+                              @if ($peserta->asesmenPrestasi && $peserta->asesmenPrestasi->file_path)
+                                  <div class="ml-4 flex-shrink-0">
+                                      <a href="{{ Storage::url($peserta->asesmenPrestasi->file_path) }}" target="_blank" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                                  </div>
+                              @else
+                                  <div class="ml-4 flex-shrink-0">
+                                      <p class="font-medium">Belum Diupload</p>
+                                  </div>
+                              @endif
+
+                            </li>
+                          </ul>
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                <h5>Informasi Kurikulum</h5>
                 <hr>
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <label class="form-control w-full ">
                         <div class="label">
-                            <span class="label-text">Pilih Kurikulum</span>
+                            <span class="label-text">Kurikulum</span>
                         </div>
-                        <select wire:model.live="kurikulum" x-model="kurikulum" @class(['select select-bordered select-sm', 'select-error' => $errors->first('kurikulum')])>
-                            <option value="">--Pilih--</option>
-                            <option value="merdeka">Kurikulum Merdeka</option>
-                            <option value="2013">Kurikulum 2013</option>
-                        </select>
+                        <input type="text" class="input input-bordered input-sm" value="{{ $kurikulum == 'merdeka' ? 'Merdeka' : '2013' }}" readonly>
                     </label>
-                    <div x-show="kurikulum == 2013"  x-transition.duration.500ms >
+                    @if($kurikulum == '2013')
                         <label class="form-control w-full ">
                             <div class="label">
-                                <span class="label-text">Pilih Jurusan</span>
+                                <span class="label-text"> Jurusan</span>
                             </div>
-                            <select wire:model.live="jurusan" @class(['select select-bordered select-sm', 'select-error' => $errors->first('jurusan')])>
-                                <option  value="">--Pilih--</option>
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="BAHASA">Bahasa</option>
-                                <option value="KEJURUAN">Kejuruan</option>
-                            </select>
+                            <input type="text" class="input input-bordered input-sm" value="{{ $jurusan}}" readonly>
                         </label>
-                    </div>
+                    @endif
+
                 </div>
                 <br>
                 <h5>Semester 1</h5>
@@ -263,19 +315,8 @@
                         </label>
                     </div>
                 @endif
-                <br>
-                <h5>Upload Rapor</h5>
-                <hr>
-                <div class="">
-                    <div class="join">
-                        <input type="file" wire:model="form.file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
-                    </div>
-                    <div wire:loading wire:target="form.file">Uploading...</div>
-                </div>
-
             </div>
         </form>
-        @endif
 
       </div>
 </div>

@@ -41,7 +41,7 @@ class Index extends Component
             $this->form->pendidikan_terakhir = $paktaIntegritas->pendidikan_terakhir;
             $this->form->nama_instansi = $paktaIntegritas->nama_instansi;
             $this->form->jabatan = $paktaIntegritas->jabatan;
-            $this->form->keanggotan_asosiasi = $paktaIntegritas->keanggotan_asosiasi;
+
         }
     }
     public function simpan()
