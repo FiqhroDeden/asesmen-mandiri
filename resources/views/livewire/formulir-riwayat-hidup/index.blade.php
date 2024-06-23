@@ -94,7 +94,7 @@
             <form wire:submit.prevent="uploadFile" >
                 <div class="join">
                     <input type="file" wire:model="file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" wire:loading.attr="disabled">
                         <span>Upload</span>
                         <div wire:loading wire:target="uploadFile">
                             <span class="loading loading-spinner loading-xs"></span>

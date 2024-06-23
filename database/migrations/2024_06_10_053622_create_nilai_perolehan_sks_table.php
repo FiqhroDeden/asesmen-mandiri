@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nilai');
             $table->integer('skor');
             $table->boolean('is_permanen')->default(false);
+            $table->boolean('is_lulus');
             $table->timestamps();
         });
     }

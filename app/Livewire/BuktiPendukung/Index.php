@@ -27,10 +27,11 @@ class Index extends Component
     }
 
     #[On("deleteBukti")]
-    public function deleteBukti(BuktiPendukung $bukti){
+    public function deleteBukti(BuktiPendukung $bukti)
+    {
 
-        if($bukti->transferSks()->count() > 0 || $bukti->perolehanSks()->count() > 0){
-            flash()->error('Tidak bukti menghapus File ini, File ini telah berelasi dengan data lain');
+        if($bukti->buktiTransferSks()->count() > 0 || $bukti->buktiPerolehanSks()->count() > 0){
+            flash()->warning('Tidak bisa menghapus File ini, File ini sedang digunakan pada data Pengajuan RPL anda.');
         }else{
             if(Storage::exists($bukti->path)){
                 Storage::delete($bukti->path);

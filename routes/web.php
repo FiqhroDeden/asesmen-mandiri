@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function (){
         Route::get('/download-form-2', [DownloadFileController::class, 'downloadForm2'])->name('download.form-2');
         Route::get('/download-form-3', [DownloadFileController::class, 'downloadForm3'])->name('download.form-3');
         Route::get('/download-form-7', [DownloadFileController::class, 'downloadForm7'])->name('download.form-7');
-        Route::get('/download-berita-acara/{no_peserta}', [DownloadFileController::class, 'beritaAcara'])->name('download.berita-acara');
+
 
         Route::get('/formulir-aplikasi-rpl', App\Livewire\FormulirAplikasiRpl\Index::class)->name('formulir-aplikasi-rpl');
         Route::get('/upload-bukti-pendukung', App\Livewire\BuktiPendukung\Index::class)->name('bukti-pendukung');
@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function (){
         Route::get('/peserta-rpl', App\Livewire\PesertaRpl\Index::class)->name('peserta-rpl');
         Route::get('/peserta-rpl/{no_peserta}/asesmen', App\Livewire\PesertaRpl\Asesmen::class)->name('peserta-rpl.asesmen');
         Route::get('/peserta-rpl/{no_peserta}/detail', App\Livewire\PesertaRpl\Detail::class)->name('peserta-rpl.detail');
+        Route::get('/download-berita-acara/{no_peserta}', [DownloadFileController::class, 'beritaAcara'])->name('download.berita-acara');
 
    });
 

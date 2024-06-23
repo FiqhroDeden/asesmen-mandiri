@@ -9,13 +9,13 @@ class BuktiPendukung extends Model
 {
     use HasFactory;
 
-    public function transferSks()
+    public function buktiTransferSks()
     {
-        return $this->hasMany(TransferSks::class);
+        return $this->hasMany(BuktiTransferSks::class);
     }
 
-    public function perolehanSks()
+    public function buktiPerolehanSks()
     {
-        return $this->hasMany(PerolehanSks::class);
+        return $this->hasMany(BuktiPerolehanSks::class);
     }
 }

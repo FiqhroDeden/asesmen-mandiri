@@ -24,6 +24,7 @@ class Asesmen extends Component
     public $no_peserta;
     public $no = 1;
     public $is_permanen;
+    public $can_permanen = false;
     public $is_form3_uploaded;
     public $isUploaded = false;
     public $file;
@@ -35,6 +36,42 @@ class Asesmen extends Component
     public function mount($no_peserta)
     {
         $peserta = Peserta::where('no_peserta', $no_peserta)->first();
+        $transferSksValid = false; // Initialize as false
+        $perolehanSksValid = false; // Initialize as false
+
+        foreach ($peserta->formulirAplikasiRpl as $formulir) {
+            if ($formulir->keterangan == 'transfer-sks') {
+                if ($formulir->transferSks) {
+                    if($formulir->transferSks->nilaiTransferSks){
+                        $transferSksValid = true;
+                    }else{
+                        $transferSksValid = false;
+                        break;
+                    }
+                } else {
+                    $transferSksValid = false;
+                    break; // If any transferSks is null, can_permanen should be false
+                }
+            } elseif ($formulir->keterangan == 'perolehan-sks') {
+                if ($formulir->perolehanSks->count() > 0) {
+                    if($formulir->nilaiPerolehanSks){
+
+                        $perolehanSksValid = true;
+                    }else{
+                        break; // If any perolehanSks has no data, can_permanen should be false
+                    }
+                } else {
+                    $perolehanSksValid = false;
+                    break; // If any perolehanSks has no data, can_permanen should be false
+                }
+            }
+        }
+
+        // Set can_permanen to true only if both conditions are valid
+        if ($transferSksValid && $perolehanSksValid) {
+            $this->can_permanen = true;
+        }
+
         $this->is_form3_uploaded = $peserta->file_form3;
         $this->no_peserta = $no_peserta;
         $this->is_permanen = $peserta->is_permanen;
@@ -42,6 +79,7 @@ class Asesmen extends Component
             $this->isUploaded = true;
         }
     }
+
 
     public function uploadFile()
     {
@@ -81,22 +119,23 @@ class Asesmen extends Component
                 ->where('no_peserta', $this->no_peserta)
                 ->get();
 
-            $acceptedGrades = ['A', 'B', 'C'];
+
 
             foreach ($formulirAplikasiRplList as $formulir) {
                 if($formulir->transferSks){
                     if($formulir->transferSks->NilaiTransferSks){
-                        if (in_array($formulir->transferSks->nilaiTransferSks->nilai, $acceptedGrades)) {
+                        if ($formulir->transferSks->NilaiTransferSks->is_lulus) {
                             $total_sks_diakui += $formulir->matakuliah->sks;
                         }
                     }
                 }
                 if($formulir->perolehanSks){
                     if($formulir->nilaiPerolehanSks){
-                        if (in_array($formulir->nilaiPerolehanSks->nilai, $acceptedGrades)) {
+                        if ($formulir->nilaiPerolehanSks->is_lulus) {
                             $total_sks_diakui += $formulir->matakuliah->sks;                    }
                     }
                 }
+
             }
             $sks_harus_ditempuh  = Matakuliah::where('kode_prodi', $peserta->prodi_pilihan)->where('is_wajib', '1')->sum('sks');
 

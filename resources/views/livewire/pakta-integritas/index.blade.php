@@ -142,7 +142,7 @@
                         @enderror
                         <div wire:loading wire:target="form.file">Uploading...</div>
                     <div class="flex w-40">
-                        <button type="submit" class="btn btn-success"><x-tabler-upload class="size-5" />Upload</button>
+                        <button type="submit" class="btn btn-success"  wire:loading.attr="disabled"><x-tabler-upload class="size-5" />Upload</button>
                     </div>
 
                 </div>

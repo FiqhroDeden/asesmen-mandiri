@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nama_matakuliah_asal');
             $table->string('sks_matakuliah_asal');
             $table->string('nilai_matakuliah_asal');
-            $table->unsignedInteger('bukti_pendukung_id');
             $table->timestamps();
         });
     }

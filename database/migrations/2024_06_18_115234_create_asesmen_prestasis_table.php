@@ -37,6 +37,7 @@ return new class extends Migration
             }
 
             $table->boolean('is_permanen')->default(false);
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

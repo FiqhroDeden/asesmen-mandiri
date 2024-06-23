@@ -4,7 +4,7 @@
             <div class="card-title flex items-center justify-between">
                 <h2 class="mr-4">Asesmen Pengajuan Aplikasi RPL</h2>
                 <div>
-                    @if(!$is_permanen)
+                    @if(!$is_permanen && $can_permanen)
                     <button class="btn btn-warning" wire:click="permanen" wire:confirm.prompt="Apa anda yakin ingin menyelesaikan proses asesmen peserta ini ? \n\n Ketik PERMANEN untuk melanjutkan.|PERMANEN">
                         <x-tabler-lock class="size-5" />
                         <span>Permanen</span>
@@ -23,6 +23,7 @@
                             <th>SKS</th>
                             <th>Jenis RPL</th>
                             <th>Nilai</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -40,8 +41,10 @@
 
                                 <td>
                                     @if ($evaluasi->keterangan == 'transfer-sks')
-                                        @if ($evaluasi->transferSks->nilaiTransferSks)
-                                            {{ $evaluasi->transferSks->nilaiTransferSks->nilai }}
+                                        @if($evaluasi->transferSks)
+                                            @if ($evaluasi->transferSks->nilaiTransferSks)
+                                                {{ $evaluasi->transferSks->nilaiTransferSks->nilai }}
+                                            @endif
                                         @endif
                                     @else
                                         @if ($evaluasi->nilaiPerolehanSks)
@@ -49,13 +52,45 @@
                                         @endif
                                     @endif
                                 </td>
+                                <td>
+                                    @if ($evaluasi->keterangan == 'transfer-sks')
+                                        @if($evaluasi->transferSks)
+                                            @if ($evaluasi->transferSks->nilaiTransferSks)
+                                                @if($evaluasi->transferSks->nilaiTransferSks->is_lulus)
+                                                    <div class="badge badge-success gap-2">
+                                                        Cukup
+                                                    </div>
+                                                @else
+                                                    <div class="badge badge-error gap-2">
+                                                        Tidak Cukup
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @else
+                                        @if ($evaluasi->nilaiPerolehanSks)
+                                            @if($evaluasi->nilaiPerolehanSks->is_lulus)
+                                                <div class="badge badge-success gap-2">
+                                                    Cukup
+                                                </div>
+                                            @else
+                                                <div class="badge badge-error gap-2">
+                                                    Tidak Cukup
+                                                </div>
+                                            @endif
+                                        @endif
+                                    @endif
+                                </td>
                                 <td >
 
                                     @if ($evaluasi->keterangan == 'transfer-sks')
-
+                                        @if($evaluasi->transferSks)
                                         <div class="flex">
-                                        <button wire:click="$dispatch('nilaiTransferSks', {evaluasi: {{ $evaluasi->id }}})" class="btn btn-info btn-sm mr-2"><x-tabler-file-star class="size-5 text-" /> Penilaian</button>
+                                            <button wire:click="$dispatch('nilaiTransferSks', {evaluasi: {{ $evaluasi->id }}})" class="btn btn-info btn-sm mr-2"><x-tabler-file-star class="size-5 text-" /> Penilaian</button>
                                         </div>
+                                        @else
+                                        Belum Mengisi Data Transfer
+                                        @endif
                                     @else
                                     <div class="flex">
                                         <button wire:click="$dispatch('nilaiPerolehanrSks', {evaluasi: {{ $evaluasi->id }}})" class="btn btn-info btn-sm mr-2"><x-tabler-file-star class="size-5 text-" /> Penilaian</button>
@@ -78,7 +113,7 @@
                     <form wire:submit.prevent="uploadFile" >
                         <div class="join">
                             <input type="file" wire:model="file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success" wire:loading.attr="disabled">
                                 <span>Upload</span>
                                 <div wire:loading wire:target="uploadFile">
                                     <span class="loading loading-spinner loading-xs"></span>

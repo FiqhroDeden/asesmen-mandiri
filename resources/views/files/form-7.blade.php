@@ -172,7 +172,7 @@
     @endforeach
 
 
-
+    <br><br><br><br><br><br>
     <p class="justify">Saya menyatakan bahwa semua keterangan dalam Daftar Riwayat Hidup ini adalah benar dan saya bertanggung-jawab atas data yang disampaikan ini. Jika di kemudian hari ternyata informasi yang saya sampaikan tidak benar, saya bersedia menerima sanksi sesuai dengan ketentuan yang berlaku dan apabila terdapat kesalahan, saya bersedia mempertanggungjawabkannya.</p>
 
     <table style="width: 100%; border-collapse: collapse; border: none; margin-left: 20px; margin-right: 100px">

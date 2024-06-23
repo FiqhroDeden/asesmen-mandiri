@@ -7,9 +7,9 @@
             <div class="flex justify-between">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-base font-semibold leading-7 text-gray-900">{{ $nama_matakuliah }}</h3>
-                    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{ $uraian_matakuliah }}</p>
                 </div>
             </div>
+            <p class="mt-1 max-w-full text-sm leading-6 text-gray-500">{{ $uraian_matakuliah }}</p>
             <div class="overflow-x-auto">
                 <table class="table">
                     <!-- head -->

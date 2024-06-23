@@ -99,11 +99,7 @@
     <p style="margin-top:0pt; margin-bottom:0pt;">&nbsp;</p>
     <table cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
         <tbody>
-            <tr style="height:19.85pt;">
-                <td style="width:496.15pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;">&nbsp;</p>
-                </td>
-            </tr>
+
             <tr style="height:19.85pt;">
                 <td style="width:496.15pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;">&nbsp;</p>
@@ -161,6 +157,8 @@
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">Mengetahui</p>
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">Wakil Dekan Bidang
                         Akademik,</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">&nbsp;</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">&nbsp;</p>
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">&nbsp;</p>
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">&nbsp;</p>
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;">&nbsp;</p>

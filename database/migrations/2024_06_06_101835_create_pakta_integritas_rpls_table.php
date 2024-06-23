@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('pendidikan_terakhir')->nullable();
             $table->string('nama_instansi')->nullable();
             $table->string('jabatan')->nullable();
-            $table->string('keanggotan_asosiasi')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

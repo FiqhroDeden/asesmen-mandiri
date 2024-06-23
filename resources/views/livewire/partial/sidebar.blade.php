@@ -35,7 +35,6 @@
                 </li>
             </ul>
         </li>
-
         @if (Auth::user()->peserta->jalur_pendaftaran === '53')
         <li>
             <h2 class="menu-title">RPL</h2>
@@ -81,22 +80,13 @@
         <li>
             <h2 class="menu-title">Prestasi</h2>
             <ul>
-                @if (!Auth::user()->peserta->is_permanen)
+
                     <li>
                         <a href="{{ route('asesmen-prestasi') }}" @class(['active' => Route::is('asesmen-prestasi')]) wire:navigate>
                             <x-tabler-books class="size-5" />
                             <span>Asesmen Prestasi</span>
                         </a>
                     </li>
-
-                @else
-                    <li>
-                        <a href="{{ route('hasil-penilaian') }}" @class(['active' => Route::is('hasil-penilaian')]) wire:navigate>
-                            <x-tabler-medal class="size-5" />
-                            <span>Hasil Penilaian </span>
-                        </a>
-                    </li>
-                @endif
 
             </ul>
         </li>

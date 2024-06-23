@@ -44,20 +44,22 @@
                                     </a>
                                 </div>
                                 @elseif($peserta->claim_by == null)
-                                <div class="tooltip m-1" data-tip="Klaim">
-                                    <button
-                                        x-data="{ loading: false }"
-                                        x-on:click="if (confirm('Apa anda yakin ingin klaim peserta ini?')) { loading = true; $wire.$dispatch('klaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
-                                        class="btn btn-sm btn-square"
-                                    >
-                                        <template x-if="!loading">
-                                            <x-tabler-user-exclamation class="text-yellow-500 size-5"/>
-                                        </template>
-                                        <template x-if="loading">
-                                            <span class="loading loading-dots loading-xs"></span>
-                                        </template>
-                                    </button>
-                                </div>
+                                    @if($peserta->formulirAplikasiRpl()->count() > 0)
+                                        <div class="tooltip m-1" data-tip="Klaim">
+                                            <button
+                                                x-data="{ loading: false }"
+                                                x-on:click="if (confirm('Apa anda yakin ingin klaim peserta ini?')) { loading = true; $wire.$dispatch('klaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
+                                                class="btn btn-sm btn-square"
+                                            >
+                                                <template x-if="!loading">
+                                                    <x-tabler-user-exclamation class="text-yellow-500 size-5"/>
+                                                </template>
+                                                <template x-if="loading">
+                                                    <span class="loading loading-dots loading-xs"></span>
+                                                </template>
+                                            </button>
+                                        </div>
+                                    @endif
                                 @endif
                             </td>
                         </tr>

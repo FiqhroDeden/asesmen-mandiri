@@ -4,13 +4,15 @@
             <div class="card-body">
                 <div class="card-title flex items-center justify-between">
                     <h2 class="mr-4">Biodata</h2>
-                    <button type="submit" class="btn btn-primary">
-                        <x-tabler-device-floppy class="size-4"/>
-                        <span class="text-bold">Simpan</span>
-                        <div wire:loading>
-                            <span class="loading loading-spinner loading-xs"></span>
-                        </div>
-                    </button>
+                    @if(!Auth::user()->peserta->is_permanen)
+                        <button type="submit" class="btn btn-primary">
+                            <x-tabler-device-floppy class="size-4"/>
+                            <span class="text-bold">Simpan</span>
+                            <div wire:loading>
+                                <span class="loading loading-spinner loading-xs"></span>
+                            </div>
+                        </button>
+                    @endif
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <label class="form-control w-full ">

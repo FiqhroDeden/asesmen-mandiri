@@ -2,6 +2,7 @@
 
 namespace App\Livewire\PesertaRpl;
 
+use App\Models\Matakuliah;
 use App\Models\Peserta;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -15,17 +16,29 @@ class PenilaianPerolehanSks extends Component
 {
     public $no  = 1;
     public $show = false;
+    public $matakuliah_id;
     public $nama_matakuliah;
     public $uraian_matakuliah;
     public $evaluasi_id;
     public $form = [];
     public $nilai ;
     public $skor ;
+    public $is_lulus;
     public $is_permanen;
+
+    public $gradeMapping = [
+        'A' => 5,
+        'B' => 4,
+        'C' => 3,
+        'D' => 2,
+        'E' => 1,
+        '-' => 0,
+    ];
 
     #[On('nilaiPerolehanrSks')]
     public function nilaiPerolehanrSks(FormulirAplikasiRpl $evaluasi)
     {
+        $this->matakuliah_id = $evaluasi->matakuliah_id;
         $peserta = Peserta::where('no_peserta', $evaluasi->no_peserta)->first();
         $this->is_permanen = $peserta->is_permanen;
         $this->evaluasi_id = $evaluasi->id;
@@ -104,8 +117,17 @@ class PenilaianPerolehanSks extends Component
     } else {
         $nilai = 'E';
     }
+    $matakuliah = Matakuliah::findOrfail($this->matakuliah_id);
 
-    return ['nilai' => $nilai, 'skor' => $percentage];
+    if($this->gradeMapping[$nilai] >= $this->gradeMapping[$matakuliah->nilai_huruf_min_lulus]){
+        $is_lulus = true;
+    }else{
+        $is_lulus = false;
+    }
+
+
+
+    return ['nilai' => $nilai, 'skor' => $percentage, 'is_lulus' => $is_lulus];
 }
 
 
@@ -140,6 +162,7 @@ class PenilaianPerolehanSks extends Component
             $result = $this->calculateNilai($dataPerolehanSks);
             $this->nilai = $result['nilai'];
             $this->skor = $result['skor'];
+            $this->is_lulus = $result['is_lulus'];
 
             NilaiPerolehanSks::updateOrCreate(
                 ['formulir_aplikasi_rpl_id' => $this->evaluasi_id],
@@ -147,6 +170,7 @@ class PenilaianPerolehanSks extends Component
                     'user_id' => Auth::user()->id,
                     'nilai' => $this->nilai,
                     'skor'  => $this->skor,
+                    'is_lulus'  => $this->is_lulus,
                 ],
             );
             DB::commit();

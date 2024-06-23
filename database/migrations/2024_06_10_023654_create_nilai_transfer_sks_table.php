@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedInteger('transfer_sks_id');
             $table->unsignedInteger('user_id');
             $table->string('nilai');
-            $table->text('keterangan')->null();
+            $table->text('keterangan')->nullable();
+            $table->boolean('is_lulus');
             $table->timestamps();
         });
     }

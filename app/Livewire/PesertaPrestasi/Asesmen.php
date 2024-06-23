@@ -92,6 +92,7 @@ class Asesmen extends Component
 
     public function submit()
     {
+
         $this->form->no_peserta = $this->no_peserta;
         $this->form->kode_prodi = $this->kode_prodi;
         $this->form->kurikulum = $this->kurikulum;
@@ -114,6 +115,7 @@ class Asesmen extends Component
 
     public function permanen()
     {
+
         $this->peserta->is_permanen = 1;
         $this->peserta->save();
         flash()->success('Permanen berhasil dilakukan');

@@ -1,20 +1,20 @@
 <div class="main-wrapper" x-data="{ kurikulum : @entangle('kurikulum') }">
     <div class="card w-auto bg-base-100 shadow-xl">
 
-        <form wire:submit.prevent="submit">
+        <form wire:submit="submit">
             <div class="card-body">
                 <div class="card-title flex items-center justify-between">
-                    <h2 class="mr-4">Asesmen Prestasi</h2>
+                    <h2 class="mr-4">Asesmen Prestasi </h2>
                     @if(!$is_permanen)
                         <div class="flex items-center">
-                            <button type="button" class="btn btn-warning mr-2"
+                            <a type="button" class="btn btn-warning mr-2"
                             wire:click="permanen"
                             wire:confirm="Apa anda yakin ingin mengakhiri Proses Asesmen Prestasi Peserta ini?"
                             >
                             <x-tabler-lock class="size-5" />
                             <span>Permanen</span>
-                            </button>
-                            <button type="button" class="btn btn-primary">
+                            </a>
+                            <button type="submit" class="btn btn-primary">
                                 <x-tabler-device-floppy class="size-4"/>
                                 <span class="text-bold">Simpan</span>
                                 <div wire:loading wire:target="submit">

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -30,75 +31,75 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $request->nik)->first();
-        if($user){
+        if ($user) {
             Auth::login($user);
             return redirect()->route('biodata');
-        }else{
-            DB::beginTransaction();
-            try {
-                $response = Http::post('https://mandiri.pmb.unpatti.ac.id/api/connect-user', [
-                    'nik'   => $request->nik,
-                    'password'   => $request->password,
-                ])->json();
+        }
 
-                if($response['success']){
-                    $peserta = $response['data'];
-
-                    $checkPeserta = User::where('no_peserta', $peserta['no_peserta'])->first();
-                    if($checkPeserta){
-                        return redirect()->back()->with('error', 'Login gagal, No Peserta anda sudah terdaftar, silahkan menghubungi Pusdatin');
-                    }
-
-                    $user = new User();
-                    $user->username = $peserta['nik'];
-                    $user->name = $peserta['nama'];
-                    $user->email = $peserta['email'];
-                    $user->role = 'peserta';
-                    $user->prodi = $peserta['prodi_pilihan'];
-                    $user->no_peserta = $peserta['no_peserta'];
-                    $user->password = bcrypt($peserta['password_default']);
-                    $user->save();
+        $response = Http::post('https://mandiri.pmb.unpatti.ac.id/api/connect-user', [
+            'nik'       => $request->nik,
+            'password'  => $request->password,
+        ])->json();
 
 
-                    $biodata = new Peserta();
-                    $biodata->no_peserta = $peserta['no_peserta'];
-                    $biodata->jalur_pendaftaran = $peserta['jalur_pendaftaran'];
-                    $biodata->prodi_pilihan = $peserta['prodi_pilihan'];
-                    $biodata->nik = $peserta['nik'];
-                    $biodata->nama = $peserta['nama'];
-                    $biodata->tempat_lahir = $peserta['tempat_lahir'];
-                    $biodata->tanggal_lahir = $peserta['tanggal_lahir'];
-                    $biodata->jenis_kelamin = $peserta['jenis_kelamin'] === 'L' ? 'Laki-laki' : 'Perempuan';
-                    $biodata->status_perkawinan = '';
-                    $biodata->agama = '';
-                    $biodata->no_hp = $peserta['no_hp'];
-                    $biodata->email = $peserta['email'];
-                    $biodata->alamat = $peserta['alamat'];
-                    $biodata->kode_pos = $peserta['kode_pos'];
-                    $biodata->kebangsaan = $peserta['id_negara'] == 'IDN' ? 'Indonesia' : '';
-                    $biodata->foto = $peserta['path_foto'];
-                    $biodata->save();
+        if (!$response['success']) {
+            return redirect()->back()->with('error', 'Login Gagal, Peserta tidak ditemukan');
+        }
 
-                    DB::commit();
+        $peserta = $response['data'];
+        if ($peserta['no_peserta'] == null) {
+            return redirect()->back()->with('error', 'No Peserta anda bermasalah, silahkan menghubungi pusdatin.');
+        }
+        $checkPeserta = User::where('no_peserta', $peserta['no_peserta'])->first();
 
-                    Auth::login($user);
-                    return redirect()->route('biodata');
-                }else{
-                    flash()->error('Login Gagal, Peserta tidak ditemukan');
-                    return redirect()->back()->with('error', 'Login Gagal, Peserta tidak ditemukan');
-                }
-            } catch (\Exception $e) {
-                DB::rollback();
-                Log::error($e);
-                // Return a user-friendly error message
-                flash()->error('Terjadi Kesalahan Sistem'. $e->getMessage());
-                return redirect()->back();
-            }
-
+        if ($checkPeserta) {
+            return redirect()->back()->with('error', 'Login gagal, No Peserta anda sudah terdaftar, silahkan menghubungi Pusdatin');
         }
 
 
+        DB::beginTransaction();
+        try {
+            $user = new User();
+            $user->username = $peserta['nik'];
+            $user->name = $peserta['nama'];
+            $user->email = $peserta['email'];
+            $user->role = 'peserta';
+            $user->prodi = $peserta['prodi_pilihan'];
+            $user->no_peserta = $peserta['no_peserta'];
+            $user->password = bcrypt($peserta['password_default']);
+            $user->save();
+
+            $biodata = new Peserta();
+            $biodata->no_peserta = $peserta['no_peserta'];
+            $biodata->jalur_pendaftaran = $peserta['jalur_pendaftaran'];
+            $biodata->prodi_pilihan = $peserta['prodi_pilihan'];
+            $biodata->nik = $peserta['nik'];
+            $biodata->nama = $peserta['nama'];
+            $biodata->tempat_lahir = $peserta['tempat_lahir'];
+            $biodata->tanggal_lahir = $peserta['tanggal_lahir'];
+            $biodata->jenis_kelamin = $peserta['jenis_kelamin'] === 'L' ? 'Laki-laki' : 'Perempuan';
+            $biodata->status_perkawinan = '';
+            $biodata->agama = '';
+            $biodata->no_hp = $peserta['no_hp'];
+            $biodata->email = $peserta['email'];
+            $biodata->alamat = $peserta['alamat'];
+            $biodata->kode_pos = $peserta['kode_pos'];
+            $biodata->kebangsaan = $peserta['id_negara'] == 'IDN' ? 'Indonesia' : '';
+            $biodata->foto = $peserta['path_foto'];
+            $biodata->save();
+
+            DB::commit();
+
+            Auth::login($user);
+            return redirect()->route('biodata');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return redirect()->back()->with('error', 'Terjadi Kesalahan Sistem, Coba lagi nanti');
+        }
     }
+
     public function ssoRedirect(Request $request)
     {
         $request->session()->put('state', $state = Str::random(40));

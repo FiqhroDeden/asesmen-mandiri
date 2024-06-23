@@ -51,7 +51,7 @@
                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Beri Nilai</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            <div x-data="{ nilai: '' }">
+                            <div x-data="{ nilai: @entangle('nilai') }">
                                 <form wire:submit.prevent="simpan">
                                     <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
                                         <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">

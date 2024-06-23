@@ -39,10 +39,6 @@ return new class extends Migration
             $table->string('status_pekerja')->nullable();
             $table->string('alamat_tempat_kerja')->nullable();
             $table->string('telp_faks')->nullable();
-            $table->string('nama_pt')->nullable();
-            $table->string('program_studi')->nullable();
-            $table->string('tahun_lulus')->nullable();
-            $table->string('foto')->nullable();
             $table->string('file_form2')->nullable();
             $table->string('file_form3')->nullable();
             $table->string('file_form7')->nullable();

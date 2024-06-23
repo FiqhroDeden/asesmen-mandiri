@@ -36,7 +36,7 @@
         </div>
         <div class="modal-action flex justify-between">
             <button type="button" wire:click="closeModal" class="btn " >Close</button>
-            <button  class="btn btn-primary">
+            <button  class="btn btn-primary"  wire:loading.attr="disabled">
                 <x-tabler-check class="size-5" />
                 <span>Simpan</span>
             </button>
