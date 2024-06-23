@@ -5,9 +5,45 @@
                 <h2 class="mr-4">Daftar Mata Kuliah</h2>
             </div>
 
-            <div class="flex justify-between">
-                <input type="text" wire:model.live="search" class="input input-bordered" placeholder="Pencarian">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+                <label class="form-control w-full md:w-1/3">
+                    <div class="label">
+                        <span class="label-text">Pencarian</span>
+                    </div>
+                    <input type="text" wire:model.live="search" class="input input-bordered w-full" placeholder="Pencarian">
+                </label>
+
+                <div class="flex flex-col md:flex-row gap-4 w-full md:w-2/3">
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Keterangan</span>
+                        </div>
+                        <select class="select select-bordered w-full" wire:model.live="keterangan">
+                            <option value="">-- Semua --</option>
+                            <option value="1">Wajib</option>
+                            <option value="0">Pilihan</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Semester</span>
+                        </div>
+                        <select class="select select-bordered w-full" wire:model.live="semester">
+                            <option value="">-- Semua --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </label>
+                </div>
             </div>
+
+
             <div class="overflow-x-auto">
                 <table class="table">
                 <!-- head -->
@@ -42,7 +78,7 @@
                                 <td>{{ $matakuliah->semester }}</td>
                                 <td>{{ $matakuliah->sks }}</td>
                                 <td>
-                                    {{ $matakuliah->is_wajib ? 'Wajib' : 'Tidak Wajib' }}
+                                    {{ $matakuliah->is_wajib ? 'Wajib' : 'Pilihan' }}
                                 </td>
                                 <td>
                                     <input type="checkbox" wire:model.live="form.{{ $matakuliah->id }}.is_rpl" class="checkbox" />

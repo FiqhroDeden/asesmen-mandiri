@@ -4,31 +4,40 @@ namespace App\Livewire\Matakuliah;
 
 use Livewire\Component;
 use App\Models\Matakuliah;
-use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
-use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
     use WithPagination;
+
     #[Title("Daftar Matakuliah")]
 
-    public $search;
-    protected $listeners = [
-        'reload'    => '$refresh'
-    ];
+    public $search = '';
+    public $keterangan = '';
+    public $semester = '';
     public $no = 1;
-
     public $form = [];
+
+    protected $listeners = [
+        'reload' => '$refresh'
+    ];
 
     public function mount()
     {
-        $dataMatakuliah = Matakuliah::where('kode_prodi', Auth::user()->prodi)->orderBy('semester', 'asc')->get();
-        foreach ($dataMatakuliah as $key => $matakuliah) {
+        $this->initializeForm();
+    }
+
+    public function initializeForm()
+    {
+        $dataMatakuliah = Matakuliah::where('kode_prodi', Auth::user()->prodi)
+            ->orderBy('semester', 'asc')
+            ->get();
+
+        foreach ($dataMatakuliah as $matakuliah) {
             $this->form[$matakuliah->id] = [
-                'is_rpl'    => $matakuliah->is_rpl ? true : false
+                'is_rpl' => $matakuliah->is_rpl ? true : false
             ];
         }
     }
@@ -36,17 +45,29 @@ class Index extends Component
     public function updatedForm($value, $key)
     {
         list($matakuliahId, $field) = explode('.', str_replace('form.', '', $key));
-
-        // Update the database
         Matakuliah::where('id', $matakuliahId)->update([$field => $value]);
     }
+
     public function render()
     {
-        $dataMatakuliah = Matakuliah::when($this->search, function ($query){
-            $query->where('kode', 'like', '%'. $this->search .'%')
-            ->orWhere('nama','like', '%'. $this->search .'%')
-            ->orWhere('kurikulum','like', '%'. $this->search .'%');
-        })->where('kode_prodi', Auth::user()->prodi)->orderBy('semester', 'asc')->paginate(10);
+        $dataMatakuliah = Matakuliah::query()
+            ->where('kode_prodi', Auth::user()->prodi)
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('kode', 'like', '%' . $this->search . '%')
+                      ->orWhere('nama', 'like', '%' . $this->search . '%')
+                      ->orWhere('tahun_berlaku', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->when($this->keterangan !== '', function ($query) {
+                $query->where('is_wajib', $this->keterangan);
+            })
+            ->when($this->semester !== '', function ($query) {
+                $query->where('semester', $this->semester);
+            })
+            ->orderBy('semester', 'asc')
+            ->paginate(10);
+
         return view('livewire.matakuliah.index', compact('dataMatakuliah'));
     }
 }

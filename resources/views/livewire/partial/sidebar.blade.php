@@ -154,6 +154,52 @@
         @endif
 
     @endif
+    @if(Auth::user()->role == 'kaprodi-asesor')
+    <li>
+        <h2 class="menu-title">Dashboard</h2>
+        <ul>
+            <li>
+                <a href="{{ route('dashboard') }}" @class(['active' => Route::is('dashboard')]) wire:navigate>
+                    <x-tabler-dashboard class="size-5" />
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('pakta-integritas') }}" @class(['active' => Route::is('pakta-integritas')]) wire:navigate>
+                    <x-tabler-script class="size-5" />
+                    <span>Pakta Integritas</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <h2 class="menu-title">Master Data</h2>
+        <ul>
+
+            <li>
+                <a href="{{ route('matakuliah') }}" @class(['active' => Route::is('matakuliah')]) wire:navigate>
+                    <x-tabler-books class="size-5" />
+                    <span>Matakuliah</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    @if (Auth::user()->paktaIntegritas && Auth::user()->paktaIntegritas->file)
+        <li>
+            <h2 class="menu-title">Asesmen RPL</h2>
+            <ul>
+                <li>
+                    <a href="{{ route('peserta-rpl') }}" @class(['active' => Route::is(['peserta-rpl', 'peserta-rpl.detail', 'peserta-rpl.asesmen'])]) wire:navigate>
+                        <x-tabler-users-group class="size-5" />
+                        <span>Peserta RPL</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endif
+    @endif
+
 
 
 </ul>

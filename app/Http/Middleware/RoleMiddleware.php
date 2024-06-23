@@ -22,7 +22,7 @@ class RoleMiddleware
                 if($user->role == 'peserta'){
                     return redirect()->route('biodata');
                 }else{
-                    return redirect()->route('dashboard');
+                    abort(403);
                     // abort(403);
                 }
             }

@@ -172,6 +172,13 @@ class AuthController extends Controller
                     $is_admin = false;
                     break;
                 }
+                if ($roleCode === 'kaprodi-asesor') {
+                    $roleName = 'kaprodi-asesor';
+                    $work_division = $userRoles['work_division']['code'];
+                    $permission = true;
+                    $is_admin = false;
+                    break;
+                }
             }
         }
 

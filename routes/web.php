@@ -16,7 +16,7 @@ Route::middleware('guest')->group(function (){
     });
 });
 Route::middleware('auth')->group(function (){
-    ROute::middleware('role:admin,kaprodi,asesor')->group(function (){
+    ROute::middleware('role:admin,kaprodi,asesor,kaprodi-asesor')->group(function (){
         Route::get('/', App\Livewire\Dashboard::class)->name('dashboard');
         Route::get('/dashboard', App\Livewire\Dashboard::class)->name('dashboard');
     });
@@ -44,14 +44,14 @@ Route::middleware('auth')->group(function (){
         Route::get('/asesmen-prestasi', App\Livewire\AsesmenPrestasi\Index::class)->name('asesmen-prestasi');
     });
     /** Peserta Routes */
-    Route::middleware('role:kaprodi')->group(function(){
+    Route::middleware('role:kaprodi,kaprodi-asesor')->group(function(){
 
         /** Mata Kuliah Routes */
         Route::get('/matakuliah', App\Livewire\Matakuliah\Index::class)->name('matakuliah');
 
     });
 
-    Route::middleware('role:asesor')->group(function(){
+    Route::middleware('role:asesor,kaprodi-asesor')->group(function(){
 
         /** ASesor Routes */
         Route::get('/peserta', App\Livewire\Peserta::class)->name('peserta');

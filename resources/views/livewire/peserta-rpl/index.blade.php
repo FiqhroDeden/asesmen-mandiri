@@ -19,51 +19,57 @@
                 </thead>
                 <tbody>
                     <!-- row 1 -->
-                    @foreach ($dataPeserta as $peserta)
-                        <tr class="text-center">
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $peserta->no_peserta }}</td>
-                            <td>{{ $peserta->nama }}</td>
-                            <td>{{ $peserta->jenis_kelamin }}</td>
-                            <td>{{ $peserta->prodi->nama_prodi }}</td>
-                            <td>
-                                <div class="tooltip m-1" data-tip="Pengajuan RPL">
-                                    <button wire:click="$dispatch('showFormulirRpl', {no_peserta: '{{ $peserta->no_peserta }}'})" class="btn btn-sm btn-square">
-                                        <x-tabler-notebook class="size-5"/>
-                                    </button>
-                                </div>
-                                <div class="tooltip m-1" data-tip="Detail Peserta">
-                                    <a href="{{ route('peserta-rpl.detail', $peserta->no_peserta ) }}" class="btn btn-sm btn-square" wire:navigate>
-                                        <x-tabler-info-circle class="text-blue-500 size-5"/>
-                                    </a>
-                                 </div>
-                                @if ($peserta->claim_by == Auth::user()->id)
-                                <div class="tooltip m-1" data-tip="Proses">
-                                    <a href="{{ route('peserta-rpl.asesmen', $peserta->no_peserta ) }}" class="btn btn-sm btn-square" wire:navigate>
-                                        <x-tabler-clipboard-check class="text-green-500 size-5"/>
-                                    </a>
-                                </div>
-                                @elseif($peserta->claim_by == null)
-                                    @if($peserta->formulirAplikasiRpl()->count() > 0)
-                                        <div class="tooltip m-1" data-tip="Klaim">
-                                            <button
-                                                x-data="{ loading: false }"
-                                                x-on:click="if (confirm('Apa anda yakin ingin klaim peserta ini?')) { loading = true; $wire.$dispatch('klaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
-                                                class="btn btn-sm btn-square"
-                                            >
-                                                <template x-if="!loading">
-                                                    <x-tabler-user-exclamation class="text-yellow-500 size-5"/>
-                                                </template>
-                                                <template x-if="loading">
-                                                    <span class="loading loading-dots loading-xs"></span>
-                                                </template>
-                                            </button>
-                                        </div>
+                    @if($dataPeserta->count() > 0)
+                        @foreach ($dataPeserta as $peserta)
+                            <tr class="text-center">
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $peserta->no_peserta }}</td>
+                                <td>{{ $peserta->nama }}</td>
+                                <td>{{ $peserta->jenis_kelamin }}</td>
+                                <td>{{ $peserta->prodi->nama_prodi }}</td>
+                                <td>
+                                    <div class="tooltip m-1" data-tip="Pengajuan RPL">
+                                        <button wire:click="$dispatch('showFormulirRpl', {no_peserta: '{{ $peserta->no_peserta }}'})" class="btn btn-sm btn-square">
+                                            <x-tabler-notebook class="size-5"/>
+                                        </button>
+                                    </div>
+                                    <div class="tooltip m-1" data-tip="Detail Peserta">
+                                        <a href="{{ route('peserta-rpl.detail', $peserta->no_peserta ) }}" class="btn btn-sm btn-square" wire:navigate>
+                                            <x-tabler-info-circle class="text-blue-500 size-5"/>
+                                        </a>
+                                    </div>
+                                    @if ($peserta->claim_by == Auth::user()->id)
+                                    <div class="tooltip m-1" data-tip="Proses">
+                                        <a href="{{ route('peserta-rpl.asesmen', $peserta->no_peserta ) }}" class="btn btn-sm btn-square" wire:navigate>
+                                            <x-tabler-clipboard-check class="text-green-500 size-5"/>
+                                        </a>
+                                    </div>
+                                    @elseif($peserta->claim_by == null)
+                                        @if($peserta->formulirAplikasiRpl()->count() > 0)
+                                            <div class="tooltip m-1" data-tip="Klaim">
+                                                <button
+                                                    x-data="{ loading: false }"
+                                                    x-on:click="if (confirm('Apa anda yakin ingin klaim peserta ini?')) { loading = true; $wire.$dispatch('klaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
+                                                    class="btn btn-sm btn-square"
+                                                >
+                                                    <template x-if="!loading">
+                                                        <x-tabler-user-exclamation class="text-yellow-500 size-5"/>
+                                                    </template>
+                                                    <template x-if="loading">
+                                                        <span class="loading loading-dots loading-xs"></span>
+                                                    </template>
+                                                </button>
+                                            </div>
+                                        @endif
                                     @endif
-                                @endif
-                            </td>
+                                </td>
+                            </tr>
+                        @endforeach
+                        @else
+                        <tr class="text-center">
+                            <td colspan="6">Belum Ada Data Peserta</td>
                         </tr>
-                    @endforeach
+                    @endif
 
                 </tbody>
                 </table>
