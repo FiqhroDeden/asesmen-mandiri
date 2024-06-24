@@ -21,7 +21,7 @@
                     <!-- row 1 -->
                     @if($dataPeserta->count() > 0)
                         @foreach ($dataPeserta as $peserta)
-                            <tr class="text-center">
+                            <tr class="text-center" wire:key="{{ $peserta->id }}">
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $peserta->no_peserta }}</td>
                                 <td>{{ $peserta->nama }}</td>

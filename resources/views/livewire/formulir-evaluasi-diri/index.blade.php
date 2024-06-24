@@ -27,7 +27,7 @@
                         </tr>
                     @else
                         @foreach ($dataEvaluasi as $evaluasi)
-                            <tr class="hover:bg-slate-100">
+                            <tr class="hover:bg-slate-100" wire:key="{{ $evaluasi->id }}">
                                 <th>{{ $no++ }}</th>
                                 <td>{{ $evaluasi->matakuliah->kode }}</td>
                                 <td>

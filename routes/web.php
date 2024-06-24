@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DummyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -24,6 +25,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/peserta-prestasi', App\Livewire\PesertaPrestasi\Index::class)->name('peserta-prestasi');
         Route::get('/peserta-prestasi/{no_peserta}/detail', App\Livewire\PesertaPrestasi\Detail::class)->name('peserta-prestasi.detail');
         Route::get('/peserta-prestasi/{no_peserta}/asesmen', App\Livewire\PesertaPrestasi\Asesmen::class)->name('peserta-prestasi.asesmen');
+
+        Route::get('make-peserta-dummy', [DummyController::class, 'makeDummy']);
     });
 
     Route::middleware('role:peserta')->group(function (){

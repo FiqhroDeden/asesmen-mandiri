@@ -67,7 +67,7 @@
                         </tr>
                     @else
                         @php
-                            $no = ($dataMatakuliah->currentPage() - 1) * $dataMatakuliah->perPage() + 1;
+                            $no = 1;
                         @endphp
                         @foreach ($dataMatakuliah as $matakuliah)
                             <tr class="hover:bg-slate-100">
@@ -96,9 +96,9 @@
                     @endif
                 </tbody>
                 </table>
-                <div class="mt-5">
+                {{-- <div class="mt-5">
                     {{ $dataMatakuliah->links(data: ['scrollTo' => false]) }}
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -35,6 +35,8 @@ class AuthController extends Controller
             Auth::login($user);
             return redirect()->route('biodata');
         }
+        return redirect()->back()->with('error', 'Peserta Tidak Temukan');
+
 
         $response = Http::post('https://mandiri.pmb.unpatti.ac.id/api/connect-user', [
             'nik'       => $request->nik,

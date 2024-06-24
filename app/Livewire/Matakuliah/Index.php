@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    use WithPagination;
+    // use WithPagination;
 
     #[Title("Daftar Matakuliah")]
 
@@ -66,7 +66,7 @@ class Index extends Component
                 $query->where('semester', $this->semester);
             })
             ->orderBy('semester', 'asc')
-            ->paginate(10);
+            ->get();
 
         return view('livewire.matakuliah.index', compact('dataMatakuliah'));
     }

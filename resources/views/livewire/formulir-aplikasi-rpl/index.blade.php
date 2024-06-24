@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             @forelse ($dataMatakuliah as $index => $matakuliah)
-                                <tr class="hover:bg-slate-100" x-data="{ status: '' }">
+                                <tr class="hover:bg-slate-100" x-data="{ status: '' }" wire:key="{{ $matakuliah->id }}">
                                     <th>{{ $index + 1 }}</th>
                                     <td>{{ $matakuliah->kode }}</td>
                                     <td>
@@ -35,7 +35,7 @@
                                     </td>
                                     <td>{{ $matakuliah->sks }}</td>
                                     <td>{{ $matakuliah->semester }}</td>
-                                    <td>{{ $matakuliah->is_wajib ? 'Mata Kuliah Wajib' : 'Tidak Wajib' }}</td>
+                                    <td>{{ $matakuliah->is_wajib ? 'Wajib' : 'Pilihan' }}</td>
                                     <td>
                                         @if($matakuliah->is_rpl)
                                             <div class="form-control space-y-2">
