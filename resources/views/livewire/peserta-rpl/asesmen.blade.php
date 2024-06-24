@@ -20,6 +20,7 @@
                             <th class="w-2">No</th>
                             <th>Kode Mata Kuliah</th>
                             <th>Mata Kuliah</th>
+                            <th>Kurikulum</th>
                             <th>SKS</th>
                             <th>Jenis RPL</th>
                             <th>Nilai</th>
@@ -34,6 +35,9 @@
                                 <td>{{ $evaluasi->matakuliah->kode }}</td>
                                 <td>
                                     {{ $evaluasi->matakuliah->nama }}
+                                </td>
+                                <td>
+                                    {{ $evaluasi->matakuliah->tahun_berlaku }}
                                 </td>
                                 <td>{{ $evaluasi->matakuliah->sks }}</td>
 

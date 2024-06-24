@@ -25,15 +25,8 @@ class PenilaianPerolehanSks extends Component
     public $skor ;
     public $is_lulus;
     public $is_permanen;
+    public $gradeMapping = [];
 
-    public $gradeMapping = [
-        'A' => 5,
-        'B' => 4,
-        'C' => 3,
-        'D' => 2,
-        'E' => 1,
-        '-' => 0,
-    ];
 
     #[On('nilaiPerolehanrSks')]
     public function nilaiPerolehanrSks(FormulirAplikasiRpl $evaluasi)
@@ -106,17 +99,72 @@ class PenilaianPerolehanSks extends Component
     $maxTotalPoints = $totalEntries * $maxPointsPerEntry;
     $percentage = ($totalPoints / $maxTotalPoints) * 100;
 
-    if ($percentage >= 80) {
-        $nilai = 'A';
-    } elseif ($percentage >= 70) {
-        $nilai = 'B';
-    } elseif ($percentage >= 60) {
-        $nilai = 'C';
-    } elseif ($percentage >= 50) {
-        $nilai = 'D';
-    } else {
-        $nilai = 'E';
+    $matakuliah = Matakuliah::findOrFail($this->matakuliah_id);
+    $kurikulum = $matakuliah->tahun_berlaku;
+    if($kurikulum == '2018' || $kurikulum == '2019' || $kurikulum == '2020'){
+        $this->gradeMapping = [
+            'A'  => 8,
+            'A-' => 7,
+            'B+' => 6,
+            'B'  => 5,
+            'B-' => 4,
+            'C'  => 3,
+            'D'  => 2,
+            'E'  => 1,
+            '-'  => 0,
+        ];
+        if ($percentage >= 94) {
+            $nilai = 'A';
+        }
+        elseif ($percentage >= 86)
+        {
+            $nilai = 'A-';
+        }
+        elseif ($percentage >= 79)
+        {
+            $nilai = 'B+';
+        }
+        elseif ($percentage >= 72)
+        {
+            $nilai = 'B';
+        }
+        elseif ($percentage >= 65)
+        {
+            $nilai = 'B-';
+        }
+        elseif ($percentage >= 55)
+        {
+            $nilai = 'C';
+        }
+        elseif ($percentage >= 45)
+        {
+            $nilai = 'D';
+        }
+        else {
+            $nilai = 'E';
+        }
+    }else{
+        $this->gradeMapping = [
+            'A' => 5,
+            'B' => 4,
+            'C' => 3,
+            'D' => 2,
+            'E' => 1,
+            '-' => 0,
+        ];
+        if ($percentage >= 85) {
+            $nilai = 'A';
+        } elseif ($percentage >= 70) {
+            $nilai = 'B';
+        } elseif ($percentage >= 55) {
+            $nilai = 'C';
+        } elseif ($percentage >= 40) {
+            $nilai = 'D';
+        } else {
+            $nilai = 'E';
+        }
     }
+
     $matakuliah = Matakuliah::findOrfail($this->matakuliah_id);
 
     if($this->gradeMapping[$nilai] >= $this->gradeMapping[$matakuliah->nilai_huruf_min_lulus]){

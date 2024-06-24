@@ -57,7 +57,28 @@
                                         <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                             <div class="flex w-0 flex-1 items-center">
                                                 <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                    <input type="text" x-model="nilai" wire:model="nilai" placeholder="Masukan Nilai" class="input input-bordered input-sm w-56 max-w-xs" required />
+                                                    {{-- <input type="text" x-model="nilai" wire:model="nilai" placeholder="Masukan Nilai" class="input input-bordered input-sm w-56 max-w-xs" required /> --}}
+                                                    <select x-model="nilai" wire:model="nilai" class="select select-bordered select-sm w-56 max-w-xs" required>
+                                                        <option value="">-- Pilih --</option>
+                                                        @if($kurikulum == '2018' || $kurikulum == '2019' || $kurikulum == '2020')
+                                                        <option value="A">A</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B">B</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+                                                        <option value="E">E</option>
+                                                        <option value="-">Tidak Relevan</option>
+                                                        @else
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+                                                        <option value="E">E</option>
+                                                        <option value="-">Tidak Relevan</option>
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="ml-4 flex-shrink-0">

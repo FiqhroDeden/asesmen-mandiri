@@ -57,10 +57,8 @@
                                         <ul >
                                         @foreach ($form[$perolehanSks->id]['bukti_pendukung'] as $bukti)
                                             <li class="border-b-2">
-                                                <div class="flex justify-between">
                                                     <span>{{ $bukti->buktiPendukung->nama }}</span>
                                                     <a href="{{ Storage::url($bukti->buktiPendukung->path) }}" class="text-medium text-blue-400" target="_blank">Lihat</a>
-                                                </div>
                                             </li>
 
                                             @endforeach

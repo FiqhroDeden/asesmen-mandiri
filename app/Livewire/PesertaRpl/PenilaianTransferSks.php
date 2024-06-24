@@ -27,18 +27,12 @@ class PenilaianTransferSks extends Component
     public $bukti_pendukung = [];
     public $keterangan;
     public $is_permanen;
+    public $kurikulum;
 
     #[Validate('required|string')]
     public $nilai;
     public $is_lulus;
-    public $gradeMapping = [
-        'A' => 5,
-        'B' => 4,
-        'C' => 3,
-        'D' => 2,
-        'E' => 1,
-        '-' => 0,
-    ];
+    public $gradeMapping = [];
 
     public function updatedNilai($value)
     {
@@ -48,6 +42,7 @@ class PenilaianTransferSks extends Component
     public function nilaiTransferSks(FormulirAplikasiRpl $evaluasi)
     {
         $this->matakuliah_id = $evaluasi->matakuliah_id;
+        $this->kurikulum = $evaluasi->matakuliah->tahun_berlaku;
         $peserta = Peserta::where('no_peserta', $evaluasi->no_peserta)->first();
         $this->is_permanen = $peserta->is_permanen;
         $this->id_transfer_sks = $evaluasi->transferSks->id;
@@ -69,6 +64,30 @@ class PenilaianTransferSks extends Component
         DB::beginTransaction();
         try {
             $matakuliah = Matakuliah::findOrFail($this->matakuliah_id);
+            if($matakuliah->tahun_berlaku == '2018' || $matakuliah->tahun_berlaku == '2019' || $matakuliah->tahun_berlaku == '2020')
+            {
+                $this->gradeMapping = [
+                    'A'  => 8,
+                    'A-' => 7,
+                    'B+' => 6,
+                    'B'  => 5,
+                    'B-' => 4,
+                    'C'  => 3,
+                    'D'  => 2,
+                    'E'  => 1,
+                    '-'  => 0,
+                ];
+            }else{
+                $this->gradeMapping = [
+                    'A' => 5,
+                    'B' => 4,
+                    'C' => 3,
+                    'D' => 2,
+                    'E' => 1,
+                    '-' => 0,
+                ];
+            }
+
             if(isset($this->gradeMapping[$this->nilai])){
                 if($this->gradeMapping[$this->nilai] >= $this->gradeMapping[$matakuliah->nilai_huruf_min_lulus]){
                     $this->is_lulus = true;
@@ -78,7 +97,7 @@ class PenilaianTransferSks extends Component
             }else{
                 $this->closeModal();
                 $this->reset();
-                return flash()->error('Nilai yang dapat diberikan hanya A sampai E');
+                return flash()->error('Harap Memilih nilai dengan benar');
 
             }
             NilaiTransferSks::updateOrCreate(
