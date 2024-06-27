@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\FormulirAplikasiRpl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Validate;
 
 
 class Index extends Component
@@ -19,10 +20,11 @@ class Index extends Component
 
     #[Title("Formulir Aplikasi RPL")]
 
-
     public ?Matakuliah $matakuliah;
     public $form = [];
     public $formulir= false;
+
+    #[Validate('max:2048', message: 'Ukuran File yang di upload tidak boleh lebih dari 2MB')]
     public $file;
 
     public $isUploaded = false;
@@ -146,22 +148,35 @@ class Index extends Component
     }
     public function uploadFile()
     {
-        $peserta = Peserta::where('no_peserta', Auth::user()->no_peserta)->first();
+        $this->validate([
+            'file'  => 'required|mimes:pdf|max:2048'
+        ], [
+            'file'  => [
+                'max'   => 'Harap Ukuran File diupload tidak lebih dari 2MB'
+            ]
+        ]);
+        DB::beginTransaction();
+        try {
+            $peserta = Peserta::where('no_peserta', Auth::user()->no_peserta)->first();
 
-        if(!is_null($peserta->file_form2))
-        {
-            if(Storage::exists($peserta->file_form2)){
-                Storage::delete($peserta->file_form2);
+            if(!is_null($peserta->file_form2))
+            {
+                if(Storage::exists($peserta->file_form2)){
+                    Storage::delete($peserta->file_form2);
+                }
             }
+            $peserta->file_form2 = $this->file->store(path: 'public/form-2');
+            $peserta->save();
+            DB::commit();
+
+            flash()->success('File Formulir Aplikasi RPL (Form 2) Berhasil Di Upload');
+            $this->reset('file');
+            $this->isUploaded = true;
+            $this->dispatch('reload');
+        } catch (\Exception $e) {
+            DB::rollback();
+            flash()->error('Terjadi Kesalahan Sistem, Silahkan coba lagi nanti,atau Hubungi admin,');
         }
-
-        $peserta->file_form2 = $this->file->store(path: 'public/form-2');
-        $peserta->save();
-
-        flash()->success('File Formulir Aplikasi RPL (Form 2) Berhasil Di Upload');
-        $this->reset('file');
-        $this->isUploaded = true;
-        $this->dispatch('reload');
     }
     public function render()
     {

@@ -11,6 +11,7 @@ use Livewire\Attributes\Title;
 use App\Models\RiwayatHidupForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Validate;
 
 class Index extends Component
 {
@@ -19,7 +20,7 @@ class Index extends Component
     protected $listeners = [
         'reload' => '$refresh'
     ];
-
+    #[Validate('max:2048', message: 'Ukuran File yang di upload tidak boleh lebih dari 2MB')]
     public $file;
     public $isUploaded = false;
 
@@ -55,22 +56,35 @@ class Index extends Component
 
     public function uploadFile()
     {
-        $peserta = Peserta::where('no_peserta', Auth::user()->no_peserta)->first();
+        $this->validate([
+            'file'  => 'required|mimes:pdf|max:2024'
+        ], [
+            'file'  => [
+                'max'   => 'Harap File diupload tidak lebih dari 2MB'
+            ]
+        ]);
+        try {
+            $peserta = Peserta::where('no_peserta', Auth::user()->no_peserta)->first();
 
-        if(!is_null($peserta->file_form7))
-        {
-            if(Storage::exists($peserta->file_form7)){
-                Storage::delete($peserta->file_form7);
+            if(!is_null($peserta->file_form7))
+            {
+                if(Storage::exists($peserta->file_form7)){
+                    Storage::delete($peserta->file_form7);
+                }
             }
+
+            $peserta->file_form7 = $this->file->store(path: 'public/form-7');
+            $peserta->save();
+
+            flash()->success('File Formulir Aplikasi RPL (Form 7) Berhasil Di Upload');
+            $this->reset('file');
+            $this->isUploaded = true;
+            $this->dispatch('reload');
+        } catch (\Exception $e) {
+            $this->reset('file');
+            flash()->error('Gagal mengupload file.. harap memeriksa ukuran file yang diupload dan coba lagi');
         }
 
-        $peserta->file_form7 = $this->file->store(path: 'public/form-7');
-        $peserta->save();
-
-        flash()->success('File Formulir Aplikasi RPL (Form 7) Berhasil Di Upload');
-        $this->reset('file');
-        $this->isUploaded = true;
-        $this->dispatch('reload');
     }
     public function render()
     {

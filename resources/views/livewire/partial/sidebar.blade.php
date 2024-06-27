@@ -164,12 +164,12 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            {{-- <li>
+            <li>
                 <a href="{{ route('pakta-integritas') }}" @class(['active' => Route::is('pakta-integritas')]) wire:navigate>
                     <x-tabler-script class="size-5" />
                     <span>Pakta Integritas</span>
                 </a>
-            </li> --}}
+            </li>
         </ul>
     </li>
 
@@ -186,7 +186,7 @@
         </ul>
     </li>
     @if (Auth::user()->paktaIntegritas && Auth::user()->paktaIntegritas->file)
-        {{-- <li>
+        <li>
             <h2 class="menu-title">Asesmen RPL</h2>
             <ul>
                 <li>
@@ -196,7 +196,7 @@
                     </a>
                 </li>
             </ul>
-        </li> --}}
+        </li>
         @endif
     @endif
 

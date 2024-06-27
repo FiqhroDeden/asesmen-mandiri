@@ -26,8 +26,11 @@
                 <div class="label">
                   <span class="label-text">Upload File</span>
                 </div>
-                <input type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Uraian File" @class(['input', 'input-error' => $errors->has('form.file')]) wire:model="form.file" required />
+                <input type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Uraian File" @class(['input', 'input-error' => $errors->has('form.file')]) wire:model.live="form.file" required />
                 <div wire:loading wire:target="form.file">Uploading...</div>
+                @error('form.file')
+                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                @enderror
 
                 @error('form.file')
                     <span class="error">{{ $message }}</span>

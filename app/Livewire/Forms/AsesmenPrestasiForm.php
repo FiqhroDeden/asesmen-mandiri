@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AsesmenPrestasiForm extends Form
 {
-    #[Validate('mimes:pdf|max:5024')]
+    #[Validate('max:2048', message: 'Ukuran File yang di upload tidak boleh lebih dari 2MB')]
     public $file;
 
 
@@ -67,7 +67,7 @@ class AsesmenPrestasiForm extends Form
             'kode_prodi' => 'required|string',
             'kurikulum' => 'required|string',
             'jurusan' => 'nullable|string',
-            'file' => 'mimes:pdf|max:5024',
+            'file' => 'mimes:pdf|max:3024',
             'semester_1_bahasa_indonesia' => 'nullable|numeric|min:0|max:100',
             'semester_1_bahasa_inggris' => 'nullable|numeric|min:0|max:100',
             'semester_1_matematika' => 'nullable|numeric|min:0|max:100',
@@ -144,7 +144,7 @@ class AsesmenPrestasiForm extends Form
             flash()->success('Data Asesmen Prestasi Berhasil Disimpan.');
         } catch (\Exception $e) {
             DB::rollback();
-            flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.'. $e);
+            flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.');
         }
     }
     public function update()
@@ -194,7 +194,7 @@ class AsesmenPrestasiForm extends Form
             flash()->success('Data Asesmen Prestasi ini Berhasil Disimpan.');
         } catch (\Exception $e) {
             DB::rollback();
-            flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.'. $e);
+            flash()->error('Terjadi kesalahan, silahkan menghubungi pengelola Asesmen Prestasi.');
         }
     }
 }

@@ -14,6 +14,13 @@
                             <x-tabler-lock class="size-5" />
                             <span>Permanen</span>
                             </a>
+                            <a type="button" class="btn btn-warning mr-2"
+                            wire:click="permanen"
+                            wire:confirm="Apa anda yakin ingin mengakhiri Proses Asesmen Prestasi Peserta ini?"
+                            >
+                            <x-tabler-lock class="size-5" />
+                            <span>Permanen</span>
+                            </a>
                             <button type="submit" class="btn btn-primary">
                                 <x-tabler-device-floppy class="size-4"/>
                                 <span class="text-bold">Simpan</span>
@@ -80,7 +87,7 @@
                         </dd>
                       </div>
                     </dl>
-                  </div>
+                </div>
                 <h5>Informasi Kurikulum</h5>
                 <hr>
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

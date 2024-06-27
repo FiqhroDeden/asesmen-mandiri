@@ -105,7 +105,7 @@
                         @if(!$isUploaded)
                         <form wire:submit.prevent="uploadFile">
                             <div class="join">
-                                <input type="file" wire:model="file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
+                                <input type="file" wire:model.live="file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
 
                                 <button type="submit" class="btn btn-success" wire:loading.attr="disabled">
                                     <span>Upload</span>
@@ -114,7 +114,9 @@
                                     </div>
                                 </button>
                             </div>
-
+                            @error('file')
+                                <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                            @enderror
                             <div wire:loading wire:target="file">Uploading...</div>
                         </form>
 

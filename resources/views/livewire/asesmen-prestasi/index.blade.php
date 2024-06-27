@@ -275,9 +275,13 @@
                 <hr>
                 <div class="">
                     <div class="join">
-                        <input type="file" wire:model="form.file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
+                        <input type="file" wire:model.live="form.file" accept="application/pdf" class="file-input file-input-bordered w-full max-w-xs" required />
                     </div>
                     <div wire:loading wire:target="form.file">Uploading...</div>
+                    <div >Format PDF (Ukuran file maksimal : 2MB)</div>
+                    @error('form.file')
+                        <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                    @enderror
                 </div>
 
             </div>

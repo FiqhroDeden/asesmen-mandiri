@@ -31,6 +31,17 @@ class Index extends Component
         }
 
     }
+    #[On('resetKlaim')]
+    public function resetKlaim (Peserta $peserta)
+    {
+
+            $peserta->claim_by = null;
+            $peserta->save();
+            flash()->success('Klaim Berhasil direset');
+            $this->dispatch('reload');
+
+
+    }
     public function render()
     {
         $dataPeserta = Peserta::where(

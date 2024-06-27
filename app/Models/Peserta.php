@@ -29,4 +29,8 @@ class Peserta extends Model
     {
         return $this->hasOne(BeritaAcaraAsesmen::class, 'no_peserta', 'no_peserta');
     }
+    public function diKlaim()
+    {
+        return $this->belongsTo(User::class, 'claim_by', 'id');
+    }
 }

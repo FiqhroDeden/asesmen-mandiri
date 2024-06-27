@@ -44,6 +44,22 @@
                                             <x-tabler-clipboard-check class="text-green-500 size-5"/>
                                         </a>
                                     </div>
+                                    @if(Auth::user()->role == 'kaprodi-asesor' || $peserta->is_permanen == 0)
+                                        <div class="tooltip m-1" data-tip="Lepas Klaim">
+                                            <button
+                                                x-data="{ loading: false }"
+                                                x-on:click="if (confirm('Apa anda yakin ingin mereset klaim peserta ini?')) { loading = true; $wire.$dispatch('resetKlaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
+                                                class="btn btn-sm btn-square"
+                                            >
+                                                <template x-if="!loading">
+                                                    <x-tabler-restore class="text-red-500 size-4"/>
+                                                </template>
+                                                <template x-if="loading">
+                                                    <span class="loading loading-dots loading-xs"></span>
+                                                </template>
+                                            </button>
+                                        </div>
+                                        @endif
                                     @elseif($peserta->claim_by == null)
                                         @if($peserta->formulirAplikasiRpl()->count() > 0)
                                             <div class="tooltip m-1" data-tip="Klaim">
@@ -61,7 +77,30 @@
                                                 </button>
                                             </div>
                                         @endif
+                                    @else
+                                        <div class="tooltip m-1" data-tip="Di Klaim Oleh: {{ $peserta->diKlaim->name }}">
+                                            <a class="btn btn-sm btn-square" >
+                                                <x-tabler-user class="text-green-500 size-5"/>
+                                            </a>
+                                        </div>
+                                        @if(Auth::user()->role == 'kaprodi-asesor')
+                                        <div class="tooltip m-1" data-tip="Reset Klaim">
+                                            <button
+                                                x-data="{ loading: false }"
+                                                x-on:click="if (confirm('Apa anda yakin ingin mereset klaim peserta ini?')) { loading = true; $wire.$dispatch('resetKlaim', {peserta: {{ $peserta->id }}}).then(() => { loading = false }) } else { loading = false; }"
+                                                class="btn btn-sm btn-square"
+                                            >
+                                                <template x-if="!loading">
+                                                    <x-tabler-restore class="text-red-500 size-4"/>
+                                                </template>
+                                                <template x-if="loading">
+                                                    <span class="loading loading-dots loading-xs"></span>
+                                                </template>
+                                            </button>
+                                        </div>
+                                        @endif
                                     @endif
+
                                 </td>
                             </tr>
                         @endforeach

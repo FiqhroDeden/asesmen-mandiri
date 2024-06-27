@@ -12,6 +12,29 @@
                     @endif
                 </div>
             </div>
+            <div class="mt-6 border-t border-gray-100">
+                <dl class="divide-y divide-gray-100">
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Foto</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      @if ($peserta->foto)
+                      <img src="https://mandiri.pmb.unpatti.ac.id/storage/{{ $peserta->foto }}" width="200px" alt="Foto Peserta">
+                      @else
+                          <p>Tidak ada Foto</p>
+                      @endif
+                    </dd>
+                  </div>
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Nomor Peserta</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->no_peserta }}</dd>
+                  </div>
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Nama</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $peserta->nama }}</dd>
+                  </div>
+                </dl>
+            </div>
+            <h5>Data Asesmen</h5>
             <div class="overflow-x-auto">
                 <table class="table">
                 <!-- head -->

@@ -28,6 +28,7 @@ class Asesmen extends Component
     public $is_form3_uploaded;
     public $isUploaded = false;
     public $file;
+    public $peserta;
 
     protected $listeners = [
         'reload'    => '$refresh'
@@ -36,6 +37,7 @@ class Asesmen extends Component
     public function mount($no_peserta)
     {
         $peserta = Peserta::where('no_peserta', $no_peserta)->first();
+        $this->peserta = $peserta;
         $transferSksValid = false; // Initialize as false
         $perolehanSksValid = false; // Initialize as false
 
@@ -163,7 +165,7 @@ class Asesmen extends Component
     public function render()
     {
         $peserta = Peserta::where('no_peserta', $this->no_peserta)->first();
-        if(Auth::user()->role !== 'asesor' || Auth::user()->prodi !== $peserta->prodi_pilihan || $peserta->claim_by !== Auth::user()->id){
+        if(Auth::user()->role == 'peserta' || Auth::user()->prodi !== $peserta->prodi_pilihan || $peserta->claim_by !== Auth::user()->id){
             $this->redirect(route('peserta-rpl'));
         }
         $dataEvaluasi = FormulirAplikasiRpl::where('no_peserta', $this->no_peserta)->get();
